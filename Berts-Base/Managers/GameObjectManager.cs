@@ -8,64 +8,19 @@ namespace Berts_Base.Managers
 {
     class GameObjectManager
     {
-        private Obj_AI_Hero champion;
-        private MenuManager menu;
-        private IHealthPrediction healthPredition;
-        private IOrbwalker orbWalker;
-        private ITargetSelector targetSelector;
+        public Obj_AI_Hero _champion { private set; get; }
+        public MenuManager _menu { private set; get; }
+        public IHealthPrediction _healthPredition { private set; get; }
+        public IOrbwalker _orbWalker { private set; get; }
+        public ITargetSelector _targetSelector { private set; get; }
 
         public GameObjectManager()
         {
-            champion = ObjectManager.GetLocalPlayer();
-            healthPredition = HealthPrediction.Implementation;
-            orbWalker = Orbwalker.Implementation;
-            targetSelector = TargetSelector.Implementation;
-            menu = new MenuManager(orbWalker, champion.ChampionName, Constants.General.ProjectName + champion.ChampionName);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public IHealthPrediction GetHealthPredition()
-        {
-            return healthPredition;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public IOrbwalker GetOrbWalker()
-        {
-            return orbWalker;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public ITargetSelector GetTargetSelector()
-        {
-            return targetSelector;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public Obj_AI_Hero GetChampion()
-        {
-            return champion;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public MenuManager GetMenuManager()
-        {
-            return menu;
+            _champion = ObjectManager.GetLocalPlayer();
+            _healthPredition = HealthPrediction.Implementation;
+            _targetSelector = TargetSelector.Implementation;
+            _orbWalker = Orbwalker.Implementation;
+            _menu = new MenuManager(_orbWalker, _champion.ChampionName.ToLower(), Constants.General.ProjectName + _champion.ChampionName);
         }
     }
 }

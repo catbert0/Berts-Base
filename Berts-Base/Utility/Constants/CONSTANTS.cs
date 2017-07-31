@@ -172,7 +172,7 @@ namespace Berts_Base.Utility
             public const String DisableAA = "Never AA in Combo Mode";
 
             public const String ManaManagerDisableL = "disablemanamanager";
-            public const String ManaManagerDisable = "Blue buff = ManaManager off";
+            public const String ManaManagerDisable = "Ignore ManaManager with BlueBuff";
 
             public const String SpellLevelBlockerL = "spelllevelblocker";
             public const String SpellLevelBlocker = "Block casting spells until level -> ";
@@ -187,16 +187,21 @@ namespace Berts_Base.Utility
             public const String AutoHarassW = "Auto Harass with W";
             public const String AutoHarassEL = "autoharasse";
             public const String AutoHarassE = "Auto Harass with E";
+
+            public const String ADSupported = "AD_Mode";
+            public const String APSupported = "AP_Mode";
+            public const String GeneralSupported = "General_Mode";
+            public const String SupportSupported = "Support_Mode";
         }
 
         public static class ChampionMenus
         {
             public const String BuildsLocation = "Berts_Base.Champion.ComboLogic.Builds";
 
-            public const String EzrealADL = "ezrealad";
-            public const String EzrealAD = "Ezreal AD";
-            public const String EzrealAPL = "ezrealap";
-            public const String EzrealAP = "Ezreal AP";
+            public const String AD = "AD";
+            public const String AP = "AP";
+            public const String General = "General";
+            public const String Support = "Support";
         }
     }
 }
