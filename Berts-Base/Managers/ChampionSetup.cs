@@ -11,7 +11,7 @@ namespace Berts_Base.Managers
         public IHealthPrediction _healthPredition { private set; get; }
         public IOrbwalker _orbWalker { private set; get; }
         public ITargetSelector _targetSelector { private set; get; }
-        public MenuManager _menu { private set; get; }
+        public MenuManager _menu;
         public Obj_AI_Hero _champion { private set; get; }
         public SpellLogic _spellLogic { private set; get; }
 

@@ -191,16 +191,12 @@ namespace Berts_Base.Utility
 
         public static class ChampionMenus
         {
+            public const String BuildsLocation = "Berts_Base.Champion.ComboLogic.Builds";
+
             public const String EzrealADL = "ezrealad";
             public const String EzrealAD = "Ezreal AD";
             public const String EzrealAPL = "ezrealap";
             public const String EzrealAP = "Ezreal AP";
         }
-
-        public static class BuildNameSpaces
-        {
-            public const String EzrealBuilds = "Catopia.Champions.Ezreal.Builds";
-        }
-
     }
 }
