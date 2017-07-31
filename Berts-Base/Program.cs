@@ -27,9 +27,9 @@ namespace Berts_Base
             GameObjectManager gamePlay = new GameObjectManager();
 
             Object[] args = { gamePlay };
-            Type t = Type.GetType("Berts_Base.Champion.Ezreal");
+            Type championType = Type.GetType(Constants.General.NameSpace+Constants.General.Champion+Constants.Champion.);
 
-            Activator.CreateInstance(t, args);
+            Activator.CreateInstance(championType, args);
         }
     }
 }

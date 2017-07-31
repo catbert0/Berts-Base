@@ -148,6 +148,8 @@ namespace Berts_Base.Utility
         public static class General
         {
             public const String ProjectName = "Berts ";
+            public const String NameSpace = "Berts_Base";
+            public const String Champion = "Champion";
         }
 
         public static class MenuOptions
