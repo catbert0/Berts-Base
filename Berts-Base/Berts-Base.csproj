@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Champion\Champion.cs" />
+    <Compile Include="Champion\Menu\BuildMenus\ADMenu.cs" />
+    <Compile Include="Champion\Menu\BuildMenus\APMenu.cs" />
+    <Compile Include="Champion\Menu\BuildMenus\GeneralMenu.cs" />
+    <Compile Include="Champion\Menu\BuildMenus\SupportMenu.cs" />
+    <Compile Include="Champion\Menu\ChampionMenu.cs" />
     <Compile Include="Managers\ChampionDefaults.cs" />
     <Compile Include="Managers\ChampionSetup.cs" />
     <Compile Include="Managers\GameObjectManager.cs" />
@@ -67,7 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Champion\ComboLogic\Builds\" />
-    <Folder Include="Champion\Menu\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
