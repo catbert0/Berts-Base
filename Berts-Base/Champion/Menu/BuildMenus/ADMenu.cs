@@ -8,9 +8,9 @@ namespace Berts_Base.Champion.Menu.BuildMenus
     {
         public void SetupMenu(ref MenuManager menu)
         {
-            menu._menuItems.Champion = new Aimtec.SDK.Menu.Menu(Constants.ChampionMenus, Constants.ChampionMenus);
+            menu._menuItems.Champion = new Aimtec.SDK.Menu.Menu(Constants.ChampionMenus.AD.ToLower(), Constants.ChampionMenus.AD);
             {
-                menu._menuItems.Champion.Add(new MenuBool(Constants.MenuOptions, Constants.MenuOptions));
+                menu._menuItems.Champion.Add(new MenuBool(Constants.MenuOptions.AutoHarassQL, Constants.MenuOptions.AutoHarassQ));
             }
             menu._menuItems.Mode.Add(menu._menuItems.Champion);
         }

@@ -17,11 +17,11 @@ namespace Berts_Base.Managers
 
         public ChampionSetup(GameObjectManager gamePlay)
         {
-            this._menu = gamePlay.GetMenuManager();
-            this._champion = gamePlay.GetChampion();
-            _healthPredition = gamePlay.GetHealthPredition();
-            _orbWalker = gamePlay.GetOrbWalker();
-            _targetSelector = gamePlay.GetTargetSelector();
+            this._menu = gamePlay._menu;
+            this._champion = gamePlay._champion;
+            _healthPredition = gamePlay._healthPredition;
+            _orbWalker = gamePlay._orbWalker;
+            _targetSelector = gamePlay._targetSelector;
             _spellLogic = new SpellLogic();
             Game.OnUpdate += Game_OnUpdate;
         }

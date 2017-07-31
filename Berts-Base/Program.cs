@@ -1,4 +1,5 @@
 ﻿using Aimtec;
+using Aimtec.SDK.Events;
 using Berts_Base.Managers;
 using Berts_Base.Utility;
 using System;
@@ -7,29 +8,29 @@ namespace Berts_Base
 {
     class Program
     {
+#warning Need to update champ name
+        private static string CHAMPIONNAME = String.Empty;
+
         static void Main(string[] args)
         {
-            Obj_AI_Hero champion = ObjectManager.GetLocalPlayer();
+            GameEvents.GameStart += GameEvents_GameStart;
+        }
 
-            if (champion.ChampionName != Constants.Champion.)
+        private static void GameEvents_GameStart()
+        {
+            if (ObjectManager.GetLocalPlayer().ChampionName != CHAMPIONNAME)
             {
-                Console.WriteLine("Did not detect supported champion so unloading - " + Constants.Champion.);
-
+                Console.WriteLine("Did not detect supported champion so unloading - " + CHAMPIONNAME);
                 return;
             }
 
-            Console.WriteLine("Loading - " + champion.ChampionName);
-            SetUp(champion);
+            Console.WriteLine("Loading - " + CHAMPIONNAME);
+            SetUp();
         }
 
-        private static void SetUp(Obj_AI_Hero champion)
+        private static void SetUp()
         {
-            GameObjectManager gamePlay = new GameObjectManager();
-
-            Object[] args = { gamePlay };
-            Type championType = Type.GetType(Constants.General.NameSpace+Constants.General.Champion+Constants.Champion.);
-
-            Activator.CreateInstance(championType, args);
+            new Champion.Champion(new GameObjectManager());
         }
     }
 }

@@ -12,18 +12,27 @@ namespace Berts_Base.Champion.Menu
 {
     class ChampionMenu
     {
+        public static bool _needsRefresh { get; set; }
+
         ADMenu _adMenu = new ADMenu();
         APMenu _apMenu = new APMenu();
         SupportMenu _supportMenu = new SupportMenu();
         GeneralMenu _generalMenu = new GeneralMenu();
 
+#warning This must be updated with supported builds
+        List<String> _supportedBuilds = new List<string> { Constants.MenuOptions.ADSupported, Constants.MenuOptions.APSupported, Constants.MenuOptions.GeneralSupported, Constants.MenuOptions.SupportSupported };
+
         public void PopulateBuilds(ref MenuManager menu)
         {
-            List<String> builds = Assembly.GetExecutingAssembly().GetTypes().Where(x => x.Namespace == Constants.ChampionMenus.BuildsLocation).ToList().Select(x => x.Name).ToList();
+            //If we changew buuild - we dispose old menu and rebuild
+            if (_needsRefresh)
+            {
+                menu._menuItems.Mode.Dispose();
+            }
 
             menu._menuItems.Mode = new Aimtec.SDK.Menu.Menu(Constants.MenuOptions.BuildL, Constants.MenuOptions.Build);
             {
-                menu._menuItems.Mode.Add(new MenuList(Constants.MenuOptions.ModeL, Constants.MenuOptions.Mode, builds.ToArray(), 0));
+                menu._menuItems.Mode.Add(new MenuList(Constants.MenuOptions.ModeL, Constants.MenuOptions.Mode, _supportedBuilds.ToArray(), 0));
             }
             menu._menuItems.Root.Add(menu._menuItems.Mode);
 
@@ -32,27 +41,27 @@ namespace Berts_Base.Champion.Menu
 
         public void GetBuildSettings(ref MenuManager menu)
         {
-            switch (menu._menuItems.Mode[Constants.MenuOptions.ModeL].As<MenuList>().Value)
+            switch (menu._menuItems.Mode[Constants.MenuOptions.ModeL].As<MenuList>().SelectedItem.ToString())
             {
-                case 0:
+                case Constants.MenuOptions.ADSupported:
                     {
                         _adMenu.SetupMenu(ref menu);
                     }
                     break;
 
-                case 1:
+                case Constants.MenuOptions.APSupported:
                     {
                         _apMenu.SetupMenu(ref menu);
                     }
                     break;
 
-                case 2:
+                case Constants.MenuOptions.GeneralSupported:
                     {
                         _generalMenu.SetupMenu(ref menu);
                     }
                     break;
 
-                case 3:
+                case Constants.MenuOptions.SupportSupported:
                     {
                         _supportMenu.SetupMenu(ref menu);
                     }
@@ -68,7 +77,7 @@ namespace Berts_Base.Champion.Menu
         /// <param name="args"></param>
         private void Mode_OnValueChanged(MenuComponent sender, ValueChangedArgs args)
         {
-            sender.Parent.Dispose();
+            _needsRefresh = true;
         }
     }
 }
