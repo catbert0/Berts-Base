@@ -1,8 +1,10 @@
-﻿using Aimtec;
+﻿using System;
+using Aimtec;
 using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Prediction.Health;
 using Aimtec.SDK.TargetSelector;
 using Berts_Base.Utility.Helpers;
+using Aimtec.SDK.Events;
 
 namespace Berts_Base.Managers
 {
@@ -13,19 +15,19 @@ namespace Berts_Base.Managers
         public ITargetSelector _targetSelector { private set; get; }
         public MenuManager _menu;
         public Obj_AI_Hero _champion { private set; get; }
-        public SpellLogic _spellLogic { private set; get; }
+        public SpellLogicHelper _spellLogic { private set; get; }
 
         public ChampionSetup(GameObjectManager gamePlay)
         {
-            this._menu = gamePlay._menu;
-            this._champion = gamePlay._champion;
+            Game.OnUpdate += Game_OnUpdate;
+            _menu = gamePlay._menu;
+            _champion = gamePlay._champion;
             _healthPredition = gamePlay._healthPredition;
             _orbWalker = gamePlay._orbWalker;
             _targetSelector = gamePlay._targetSelector;
-            _spellLogic = new SpellLogic();
-            Game.OnUpdate += Game_OnUpdate;
+            _spellLogic = new SpellLogicHelper();
         }
 
-        abstract public void Game_OnUpdate();
+        public abstract void Game_OnUpdate();
     }
 }

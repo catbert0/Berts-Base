@@ -19,9 +19,6 @@ namespace Berts_Base.Champion.Menu
         SupportMenu _supportMenu = new SupportMenu();
         GeneralMenu _generalMenu = new GeneralMenu();
 
-#warning This must be updated with supported builds
-        List<String> _supportedBuilds = new List<string> { Constants.MenuOptions.ADSupported, Constants.MenuOptions.APSupported, Constants.MenuOptions.GeneralSupported, Constants.MenuOptions.SupportSupported };
-
         public void PopulateBuilds(ref MenuManager menu)
         {
             //If we changew buuild - we dispose old menu and rebuild
@@ -32,7 +29,7 @@ namespace Berts_Base.Champion.Menu
 
             menu._menuItems.Mode = new Aimtec.SDK.Menu.Menu(Constants.MenuOptions.BuildL, Constants.MenuOptions.Build);
             {
-                menu._menuItems.Mode.Add(new MenuList(Constants.MenuOptions.ModeL, Constants.MenuOptions.Mode, _supportedBuilds.ToArray(), 0));
+                menu._menuItems.Mode.Add(new MenuList(Constants.MenuOptions.ModeL, Constants.MenuOptions.Mode, Constants.Builds.SupportedBuilds, 0));
             }
             menu._menuItems.Root.Add(menu._menuItems.Mode);
 
@@ -43,25 +40,25 @@ namespace Berts_Base.Champion.Menu
         {
             switch (menu._menuItems.Mode[Constants.MenuOptions.ModeL].As<MenuList>().SelectedItem.ToString())
             {
-                case Constants.MenuOptions.ADSupported:
+                case Constants.Builds.ADSupported:
                     {
                         _adMenu.SetupMenu(ref menu);
                     }
                     break;
 
-                case Constants.MenuOptions.APSupported:
+                case Constants.Builds.APSupported:
                     {
                         _apMenu.SetupMenu(ref menu);
                     }
                     break;
 
-                case Constants.MenuOptions.GeneralSupported:
+                case Constants.Builds.GeneralSupported:
                     {
                         _generalMenu.SetupMenu(ref menu);
                     }
                     break;
 
-                case Constants.MenuOptions.SupportSupported:
+                case Constants.Builds.SupportSupported:
                     {
                         _supportMenu.SetupMenu(ref menu);
                     }

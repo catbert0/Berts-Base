@@ -69,6 +69,7 @@
     <Compile Include="Champion\Champion.cs" />
     <Compile Include="Champion\ComboLogic\Builds\AD_Mode.cs" />
     <Compile Include="Champion\ComboLogic\Builds\AP_Mode.cs" />
+    <Compile Include="Champion\ComboLogic\Builds\ChampionBuildBase.cs" />
     <Compile Include="Champion\ComboLogic\Builds\General_Mode.cs" />
     <Compile Include="Champion\ComboLogic\Builds\Support_Mode.cs" />
     <Compile Include="Champion\Menu\BuildMenus\ADMenu.cs" />
@@ -82,7 +83,8 @@
     <Compile Include="Managers\MenuManager.cs" />
     <Compile Include="Utility\Constants\Constants.cs" />
     <Compile Include="Utility\Enums\BertOrbwalkingModes.cs" />
-    <Compile Include="Utility\Helpers\SpellLogic.cs" />
+    <Compile Include="Utility\Helpers\MenuHelper.cs" />
+    <Compile Include="Utility\Helpers\SpellLogicHelper.cs" />
     <Compile Include="Utility\Menu\MenuItems.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

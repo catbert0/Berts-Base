@@ -1,11 +1,14 @@
 ﻿using Berts_Base.Managers;
 using Berts_Base.Champion.Menu;
+using Berts_Base.Utility;
 
 namespace Berts_Base.Champion
 {
     class Champion : ChampionSetup
     {
         ChampionMenu _championMenu = new ChampionMenu();
+
+        bool _manaManagerOff = false;
 
         public Champion(GameObjectManager gamePlay) : base(gamePlay)
         {
@@ -19,8 +22,6 @@ namespace Berts_Base.Champion
 
             if (!CastSpells())
                 return;
-
-#warning Need to implement manamanager override
 
 #warning Need to implement disable AA in combo
 
@@ -45,8 +46,7 @@ namespace Berts_Base.Champion
         }
 
         /// <summary>
-        /// Controller to not cast spells until a certain
-        /// specified level
+        /// Controller to not cast spells until a certain specified level
         /// </summary>
         /// <returns></returns>
         private bool CastSpells()
@@ -58,6 +58,20 @@ namespace Berts_Base.Champion
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Controller to ignore manamanager if player has blue buff
+        /// </summary>
+        /// <returns></returns>
+        private void IgnoreManaManager()
+        {
+            if (_spellLogic.IgnoreManaManager(_menu) && _champion.BuffManager.HasBuff(Constants.BuffNames.BlueBuff))
+            {
+                _manaManagerOff = true;
+            }
+
+            _manaManagerOff = false;
         }
     }
 }

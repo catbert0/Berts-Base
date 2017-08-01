@@ -1,11 +1,8 @@
-﻿using Aimtec.SDK.Menu;
-using Aimtec.SDK.Menu.Components;
-using Berts_Base.Managers;
-using Berts_Base.Utility;
+﻿using Berts_Base.Managers;
 
 namespace Berts_Base.Utility.Helpers
 {
-    public class SpellLogic
+    public class SpellLogicHelper
     {
         /// <summary>
         /// Block casting spells until a selected level
@@ -15,20 +12,20 @@ namespace Berts_Base.Utility.Helpers
         /// <returns></returns>
         public bool ShouldCastSpells(int championLevel, MenuManager menu)
         {
-            int selectedMenuVal = GetListItemVal(menu._menuItems.Misc, Constants.MenuOptions.SpellLevelBlockerL);
+            int selectedMenuVal = MenuHelper.GetMenuListItemVal(menu._menuItems.Misc, Constants.MenuOptions.SpellLevelBlockerL);
 
             return selectedMenuVal == 0 ? true : championLevel >= selectedMenuVal;
         }
 
         /// <summary>
-        /// Utility method to return the value selected in a list
+        /// Gets if player should ignore manamanger with bluebuff
         /// </summary>
-        /// <param name="menuItem"></param>
-        /// <param name="option"></param>
+        /// <param name="championLevel"></param>
+        /// <param name="menu"></param>
         /// <returns></returns>
-        private int GetListItemVal(Menu menuItem, string option)
+        public bool IgnoreManaManager(MenuManager menu)
         {
-            return menuItem[option].As<MenuList>().Value;
+            return(MenuHelper.GetMenuBoolVal(menu._menuItems.Misc, Constants.MenuOptions.ManaManagerDisableL));
         }
     }
 }

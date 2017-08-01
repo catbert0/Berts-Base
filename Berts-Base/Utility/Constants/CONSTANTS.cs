@@ -4,6 +4,18 @@ namespace Berts_Base.Utility
 {
     static class Constants
     {
+        public static class Builds
+        {
+
+            public const String ADSupported = "AD_Mode";
+            public const String APSupported = "AP_Mode";
+            public const String GeneralSupported = "General_Mode";
+            public const String SupportSupported = "Support_Mode";
+            //public static string[] SupportedBuilds = { ADSupported, APSupported, GeneralSupported, SupportSupported };
+#warning This needs to be updated to display the relevant builds
+            public static string[] SupportedBuilds = { ADSupported, APSupported, GeneralSupported, SupportSupported };
+        }
+
         public static class Champion
         {
             public const String Aatrox = "Aatrox";
@@ -187,11 +199,6 @@ namespace Berts_Base.Utility
             public const String AutoHarassW = "Auto Harass with W";
             public const String AutoHarassEL = "autoharasse";
             public const String AutoHarassE = "Auto Harass with E";
-
-            public const String ADSupported = "AD_Mode";
-            public const String APSupported = "AP_Mode";
-            public const String GeneralSupported = "General_Mode";
-            public const String SupportSupported = "Support_Mode";
         }
 
         public static class ChampionMenus
@@ -202,6 +209,11 @@ namespace Berts_Base.Utility
             public const String AP = "AP";
             public const String General = "General";
             public const String Support = "Support";
+        }
+
+        public static class BuffNames
+        {
+            public const String BlueBuff = "crestoftheancientgolem";
         }
     }
 }
