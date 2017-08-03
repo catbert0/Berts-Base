@@ -60,5 +60,29 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         public abstract void OnRemoveBuff(Obj_AI_Base sender, Buff buff);
 
         public abstract void OnSelectUnit(GameObject e);
+
+        public virtual bool GetIfShouldCastQ()
+        {
+#warning Need to implement manalogic
+            return true;
+        }
+
+        public virtual bool GetIfShouldCastW()
+        {
+#warning Need to implement manalogic
+            return true;
+        }
+
+        public virtual bool GetIfShouldCastE()
+        {
+#warning Need to implement manalogic
+            return true;
+        }
+
+        public virtual bool GetIfShouldCastR()
+        {
+#warning Need to implement manalogic
+            return true;
+        }
     }
 }

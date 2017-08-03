@@ -20,7 +20,6 @@ namespace Berts_Base.Utility.Helpers
         /// <summary>
         /// Gets if player should ignore manamanger with bluebuff
         /// </summary>
-        /// <param name="championLevel"></param>
         /// <param name="menu"></param>
         /// <returns></returns>
         public bool IgnoreManaManager(MenuManager menu)

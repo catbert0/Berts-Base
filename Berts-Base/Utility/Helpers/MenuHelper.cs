@@ -11,7 +11,7 @@ namespace Berts_Base.Utility.Helpers
         /// <param name="menuItem"></param>
         /// <param name="option"></param>
         /// <returns></returns>
-        public static int GetMenuListItemVal(Menu menuItem, string option)
+        public static int GetMenuListItemVal(Aimtec.SDK.Menu.Menu menuItem, string option)
         {
             return menuItem[option].As<MenuList>().Value;
         }

@@ -4,15 +4,10 @@ using Berts_Base.Utility;
 
 namespace Berts_Base.Champion.Menu.BuildMenus
 {
-    class SupportMenu
+    class SupportMenu : BasicSettings
     {
-        public void SetupMenu(ref MenuManager menu)
+        public SupportMenu(ref MenuManager menu, string build) : base(ref menu, build)
         {
-            menu._menuItems.Champion = new Aimtec.SDK.Menu.Menu(Constants.ChampionMenus.Support.ToLower(), Constants.ChampionMenus.Support);
-            {
-                menu._menuItems.Champion.Add(new MenuBool(Constants.MenuOptions.AutoHarassQL, Constants.MenuOptions.AutoHarassQ));
-            }
-            menu._menuItems.Mode.Add(menu._menuItems.Champion);
         }
     }
 }

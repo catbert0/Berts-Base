@@ -1,7 +1,6 @@
 ﻿using Aimtec;
 using Aimtec.SDK.Events;
 using Berts_Base.Managers;
-using Berts_Base.Utility;
 using System;
 
 namespace Berts_Base

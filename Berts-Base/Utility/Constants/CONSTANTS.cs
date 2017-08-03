@@ -190,15 +190,6 @@ namespace Berts_Base.Utility
             public const String SpellLevelBlocker = "Block casting spells until level -> ";
             public static string[] SpellLevelBlockerOptions = { "Off", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17" };
             public const int SpellLevelBlockerOffset = 1;
-
-            public const String AutoHarassL = "autoharass";
-            public const String AutoHarass = "Auto Harass";
-            public const String AutoHarassQL = "autoharassq";
-            public const String AutoHarassQ = "Auto Harass with Q";
-            public const String AutoHarassWL = "autoharassw";
-            public const String AutoHarassW = "Auto Harass with W";
-            public const String AutoHarassEL = "autoharasse";
-            public const String AutoHarassE = "Auto Harass with E";
         }
 
         public static class ChampionMenus
@@ -209,6 +200,53 @@ namespace Berts_Base.Utility
             public const String AP = "AP";
             public const String General = "General";
             public const String Support = "Support";
+
+            //ManaManager 
+            public const String manaManagerQL = "manamanagerq";
+            public const String manaManagerQ = "Block casting Q when Below % Mana";
+            public const String manaManagerWL = "manamanagerw";
+            public const String manaManagerW = "Block casting W when Below % Mana";
+            public const String manaManagerEL = "manamanagere";
+            public const String manaManagerE = "Block casting E when Below % Mana";
+            public const String manaManagerRL = "manamanagerr";
+            public const String manaManagerR = "Block casting R when Below % Mana";
+
+            //Controls if should auto harass with spells
+            public const String AutoHarassL = "autoharass";
+            public const String AutoHarass = "Auto Harass";
+            public const String AutoHarassQL = "autoharassq";
+            public const String AutoHarassQ = "Auto Harass with Q";
+            public const String AutoHarassWL = "autoharassw";
+            public const String AutoHarassW = "Auto Harass with W";
+            public const String AutoHarassEL = "autoharasse";
+            public const String AutoHarassE = "Auto Harass with E";
+            public const String AutoHarassRL = "autoharassR";
+            public const String AutoHarassR = "Auto Harass with R";
+
+            public const String ComboSettingsL = "combosettings";
+            public const String ComboSettings = "Combo Settings";
+            public const String ComboManaManagerL = "combomanamanager";
+            public const String ComboManaManager = "Combo ManaManager";
+
+            public const String HarassSettingsL = "harasssettings";
+            public const String HarassSettings = "Harass Settings";
+            public const String HarassManaManagerL = "harassmanamanager";
+            public const String HarassManaManager = "Harass ManaManager";
+
+            public const String LaneClearSettingsL = "laneclearsettings";
+            public const String LaneClearSettings = "Laneclear Settings";
+            public const String LaneClearManaManagerL = "laneclearmanamanager";
+            public const String LaneClearManaManager = "Laneclear ManaManager";
+
+            public const String LastHitSettingsL = "lasthitsettings";
+            public const String LastHitSettings = "Lasthit Settings";
+            public const String LastHitManaManagerL = "lasthitmanamanager";
+            public const String LastHitManaManager = "Lasthit ManaManager";
+
+            public const String AutoHarassSettingsL = "autoharasssettings";
+            public const String AutoHarassSettings = "Autoharass Settings";
+            public const String AutoHarassManaManagerL = "autoharassmanamanager";
+            public const String AutoHarassManaManager = "Autoharass ManaManager";
         }
 
         public static class BuffNames

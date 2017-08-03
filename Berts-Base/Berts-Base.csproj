@@ -74,6 +74,7 @@
     <Compile Include="Champion\ComboLogic\Builds\Support_Mode.cs" />
     <Compile Include="Champion\Menu\BuildMenus\ADMenu.cs" />
     <Compile Include="Champion\Menu\BuildMenus\APMenu.cs" />
+    <Compile Include="Champion\Menu\BuildMenus\BasicSettings.cs" />
     <Compile Include="Champion\Menu\BuildMenus\GeneralMenu.cs" />
     <Compile Include="Champion\Menu\BuildMenus\SupportMenu.cs" />
     <Compile Include="Champion\Menu\ChampionMenu.cs" />

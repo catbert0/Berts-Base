@@ -1,12 +1,9 @@
-﻿using System;
-using Berts_Base.Champion.Menu.BuildMenus;
-using System.Collections.Generic;
-using System.Reflection;
+﻿using Berts_Base.Champion.Menu.BuildMenus;
 using Berts_Base.Utility;
-using System.Linq;
 using Berts_Base.Managers;
 using Aimtec.SDK.Menu.Components;
 using Aimtec.SDK.Menu;
+using System;
 
 namespace Berts_Base.Champion.Menu
 {
@@ -14,10 +11,10 @@ namespace Berts_Base.Champion.Menu
     {
         public static bool _needsRefresh { get; set; }
 
-        ADMenu _adMenu = new ADMenu();
-        APMenu _apMenu = new APMenu();
-        SupportMenu _supportMenu = new SupportMenu();
-        GeneralMenu _generalMenu = new GeneralMenu();
+        ADMenu _adMenu;
+        APMenu _apMenu;
+        SupportMenu _supportMenu;
+        GeneralMenu _generalMenu;
 
         public void PopulateBuilds(ref MenuManager menu)
         {
@@ -42,25 +39,25 @@ namespace Berts_Base.Champion.Menu
             {
                 case Constants.Builds.ADSupported:
                     {
-                        _adMenu.SetupMenu(ref menu);
+                        _adMenu = new ADMenu(ref menu, Constants.ChampionMenus.AD.ToLower());
                     }
                     break;
 
                 case Constants.Builds.APSupported:
                     {
-                        _apMenu.SetupMenu(ref menu);
+                        _apMenu = new APMenu(ref menu, Constants.ChampionMenus.AP.ToLower());
                     }
                     break;
 
                 case Constants.Builds.GeneralSupported:
                     {
-                        _generalMenu.SetupMenu(ref menu);
+                        _generalMenu = new GeneralMenu(ref menu, Constants.ChampionMenus.General.ToLower());
                     }
                     break;
 
                 case Constants.Builds.SupportSupported:
                     {
-                        _supportMenu.SetupMenu(ref menu);
+                        _supportMenu = new SupportMenu(ref menu, Constants.ChampionMenus.Support.ToLower());
                     }
                     break;
             }
@@ -74,7 +71,9 @@ namespace Berts_Base.Champion.Menu
         /// <param name="args"></param>
         private void Mode_OnValueChanged(MenuComponent sender, ValueChangedArgs args)
         {
-            _needsRefresh = true;
+            //We only refresh menu if a new build is chosen
+            if (sender.DisplayName == Constants.MenuOptions.Mode)
+                _needsRefresh = true;
         }
     }
 }
