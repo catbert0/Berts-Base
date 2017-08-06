@@ -58,6 +58,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,31 +68,45 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Champion\Champion.cs" />
-    <Compile Include="Champion\ComboLogic\Builds\AD_Mode.cs" />
-    <Compile Include="Champion\ComboLogic\Builds\AP_Mode.cs" />
+    <Compile Include="Champion\ComboLogic\Builds\AD_ModeLogic\AD_Mode.cs" />
+    <Compile Include="Champion\ComboLogic\Builds\AD_ModeLogic\ChampionLogic\ADModeOrbLogic.cs" />
+    <Compile Include="Champion\ComboLogic\Builds\AP_ModeLogic\AP_Mode.cs" />
+    <Compile Include="Champion\ComboLogic\Builds\AP_ModeLogic\ChampionLogic\APModeOrbLogic.cs" />
     <Compile Include="Champion\ComboLogic\Builds\ChampionBuildBase.cs" />
-    <Compile Include="Champion\ComboLogic\Builds\General_Mode.cs" />
-    <Compile Include="Champion\ComboLogic\Builds\Support_Mode.cs" />
+    <Compile Include="Champion\ComboLogic\Builds\General_ModeLogic\ChampionLogic\GeneralModeOrbLogic.cs" />
+    <Compile Include="Champion\ComboLogic\Builds\General_ModeLogic\General_Mode.cs" />
+    <Compile Include="Champion\ComboLogic\Builds\Shared\OrbwalkingModes.cs" />
+    <Compile Include="Champion\ComboLogic\Builds\Support_ModeLogic\ChampionLogic\SupportModeOrbLogic.cs" />
+    <Compile Include="Champion\ComboLogic\Builds\Support_ModeLogic\Support_Mode.cs" />
     <Compile Include="Champion\Menu\BuildMenus\ADMenu.cs" />
     <Compile Include="Champion\Menu\BuildMenus\APMenu.cs" />
     <Compile Include="Champion\Menu\BuildMenus\BasicSettings.cs" />
     <Compile Include="Champion\Menu\BuildMenus\GeneralMenu.cs" />
     <Compile Include="Champion\Menu\BuildMenus\SupportMenu.cs" />
     <Compile Include="Champion\Menu\ChampionMenu.cs" />
-    <Compile Include="Managers\ChampionDefaults.cs" />
-    <Compile Include="Managers\ChampionSetup.cs" />
-    <Compile Include="Managers\GameObjectManager.cs" />
-    <Compile Include="Managers\MenuManager.cs" />
+    <Compile Include="Properties\Setup.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Setup.settings</DependentUpon>
+    </Compile>
+    <Compile Include="SetupHelpers\ChampionSetup.cs" />
+    <Compile Include="SetupHelpers\GameObjectManager.cs" />
+    <Compile Include="SetupHelpers\MenuManager.cs" />
     <Compile Include="Utility\Constants\Constants.cs" />
-    <Compile Include="Utility\Enums\BertOrbwalkingModes.cs" />
+    <Compile Include="Utility\Enums\Enum.cs" />
     <Compile Include="Utility\Helpers\MenuHelper.cs" />
     <Compile Include="Utility\Helpers\SpellLogicHelper.cs" />
+    <Compile Include="Utility\Logging\SimpleLog.cs" />
     <Compile Include="Utility\Menu\MenuItems.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Properties\Setup.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Setup.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Aimtec.SDK\Aimtec.SDK\Aimtec.SDK.csproj">

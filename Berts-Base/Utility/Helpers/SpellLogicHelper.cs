@@ -1,16 +1,22 @@
-﻿using Berts_Base.Managers;
+﻿using Berts_Base.SetupHelpers;
 
-namespace Berts_Base.Utility.Helpers
+namespace Berts_Base
 {
-    public class SpellLogicHelper
+    /// <summary>
+    /// Author: Robert - catbert
+    /// 
+    /// SpellHelper class to interface with menu options to decide
+    /// what to do
+    /// </summary>
+    public static class SpellLogicHelper
     {
         /// <summary>
         /// Block casting spells until a selected level
         /// </summary>
-        /// <param name="championLevel"></param>
-        /// <param name="menu"></param>
+        /// <param name="championLevel">The champion level.</param>
+        /// <param name="menu">The menu.</param>
         /// <returns></returns>
-        public bool ShouldCastSpells(int championLevel, MenuManager menu)
+        public static bool ShouldCastSpells(int championLevel, MenuManager menu)
         {
             int selectedMenuVal = MenuHelper.GetMenuListItemVal(menu._menuItems.Misc, Constants.MenuOptions.SpellLevelBlockerL);
 
@@ -22,7 +28,7 @@ namespace Berts_Base.Utility.Helpers
         /// </summary>
         /// <param name="menu"></param>
         /// <returns></returns>
-        public bool IgnoreManaManager(MenuManager menu)
+        public static bool IgnoreManaManager(MenuManager menu)
         {
             return(MenuHelper.GetMenuBoolVal(menu._menuItems.Misc, Constants.MenuOptions.ManaManagerDisableL));
         }

@@ -1,21 +1,37 @@
-﻿using Berts_Base.Managers;
+﻿using Berts_Base.SetupHelpers;
 using Berts_Base.Champion.Menu;
-using Berts_Base.Utility;
 
 namespace Berts_Base.Champion
 {
+    /// <summary>
+    /// Author: Robert - catbert
+    /// 
+    /// Main class for Champions - All basic actions should be performed in here
+    /// and anything specific to a build should be put into the build class
+    /// </summary>
+    /// <seealso cref="Berts_Base.SetupHelpers.ChampionSetup" />
     class Champion : ChampionSetup
     {
-        ChampionMenu _championMenu = new ChampionMenu();
+        private ChampionMenu _championMenu = new ChampionMenu();
 
         bool _manaManagerOff = false;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Champion"/> class.
+        /// </summary>
+        /// <param name="gamePlay">The game play.</param>
         public Champion(GameObjectManager gamePlay) : base(gamePlay)
         {
-            _championMenu.PopulateBuilds(ref _menu);
-            _championMenu.GetBuildSettings(ref _menu);
+            SimpleLog.Info("Initialising Champion " + _currentBuild);
+            _championMenu.PopulateSupportedBuilds(ref _menu);
+            _currentBuild = _championMenu.GetBuildSettings(ref _menu);
+            SetupNewBuild(_currentBuild);
+            SimpleLog.Info("Champion Initialised " + _currentBuild);
         }
 
+        /// <summary>
+        /// Event is fired on every game update
+        /// </summary>
         public override void Game_OnUpdate()
         {
             CheckForMenuRefresh();
@@ -23,35 +39,43 @@ namespace Berts_Base.Champion
             if (!CastSpells())
                 return;
 
+            GetOrbWalkerModeLogic();
+
 #warning Need to implement disable AA in combo
 
 #warning Need to implement disabling lasthitting (Support mode)
-
-
         }
 
         /// <summary>
-        /// Refreshes the menu if user changed build
+        /// Refreshes the menu if the user changes build in the menu
         /// </summary>
         private void CheckForMenuRefresh()
         {
-            if (ChampionMenu._needsRefresh)
+            if (_championMenu._needsRefresh)
             {
-                //Populates supported builds
-                _championMenu.PopulateBuilds(ref _menu);
-                //Populates build settings
-                _championMenu.GetBuildSettings(ref _menu);
-                ChampionMenu._needsRefresh = false;
+                try
+                {
+                    SimpleLog.Info("Refreshing Menu" + _currentBuild);
+                    MenuHelper.SimulateKeyPress(Constants.General.ShiftSimulateKey);
+                    _championMenu.PopulateSupportedBuilds(ref _menu);
+                    _currentBuild = _championMenu.GetBuildSettings(ref _menu);
+                    SetupNewBuild(_currentBuild, true);
+                    SimpleLog.Info("MenuRefreshed");
+                }
+                catch
+                {
+                    SimpleLog.Error("Failed to transition Builds in CheckForMenuRefresh()");
+                }
             }
         }
 
         /// <summary>
-        /// Controller to not cast spells until a certain specified level
+        /// Controller to not cast spells until a certain specified level from the menu
         /// </summary>
         /// <returns></returns>
         private bool CastSpells()
         {
-            if (!_spellLogic.ShouldCastSpells(_champion.Level, _menu))
+            if (!SpellLogicHelper.ShouldCastSpells(_champion.Level, _menu))
             {
                 //User has selected to block spell casts until a level so we just orbwalk until the level has been reached
                 return false;
@@ -66,7 +90,7 @@ namespace Berts_Base.Champion
         /// <returns></returns>
         private void IgnoreManaManager()
         {
-            if (_spellLogic.IgnoreManaManager(_menu) && _champion.BuffManager.HasBuff(Constants.BuffNames.BlueBuff))
+            if (SpellLogicHelper.IgnoreManaManager(_menu) && _champion.BuffManager.HasBuff(Constants.BuffNames.BlueBuff))
             {
                 _manaManagerOff = true;
             }

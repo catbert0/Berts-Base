@@ -1,20 +1,44 @@
 ﻿using Aimtec.SDK.Menu.Components;
-using Berts_Base.Managers;
-using Berts_Base.Utility;
+using Berts_Base.SetupHelpers;
+using System;
 
 namespace Berts_Base.Champion.Menu.BuildMenus
 {
+    /// <summary>
+    /// Author: Robert - catbert
+    /// 
+    /// Base class for General Champion Settings
+    /// </summary>
     class BasicSettings
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BasicSettings"/> class.
+        /// </summary>
+        /// <param name="menu">The menu.</param>
+        /// <param name="build">The build.</param>
         protected BasicSettings(ref MenuManager menu, string build)
         {
-            SetUpComboManaManager(ref menu, build);
-            SetUpHarassManaManager(ref menu, build);
-            SetUpLaneClearManaManager(ref menu, build);
-            SetUpLastHitManaManager(ref menu, build);
-            SetUpAutoHarassManaManager(ref menu, build);
+            try
+            {
+                SimpleLog.Info("Setting up General Champion settings");
+                SetUpComboManaManager(ref menu, build);
+                SetUpHarassManaManager(ref menu, build);
+                SetUpLaneClearManaManager(ref menu, build);
+                SetUpLastHitManaManager(ref menu, build);
+                SetUpAutoHarassManaManager(ref menu, build);
+                SimpleLog.Info("Finished setting up Champion settings");
+            }
+            catch (Exception ex)
+            {
+                SimpleLog.Error("Could not setup BasicSettings " + ex.Message);
+            }
         }
 
+        /// <summary>
+        /// Sets up combo mana manager.
+        /// </summary>
+        /// <param name="menu">The menu.</param>
+        /// <param name="build">The build.</param>
         protected virtual void SetUpComboManaManager(ref MenuManager menu, string build)
         {
             //Combo Container
@@ -32,11 +56,16 @@ namespace Berts_Base.Champion.Menu.BuildMenus
             menu._menuItems.Combo.Add(menu._menuItems.ComboManaMenu);
         }
 
+        /// <summary>
+        /// Sets up harass mana manager.
+        /// </summary>
+        /// <param name="menu">The menu.</param>
+        /// <param name="build">The build.</param>
         protected virtual void SetUpHarassManaManager(ref MenuManager menu, string build)
         {
             //Harass Container
-            menu._menuItems.Mixed = new Aimtec.SDK.Menu.Menu(Constants.ChampionMenus.HarassSettingsL, Constants.ChampionMenus.HarassSettings);
-            menu._menuItems.Mode.Add(menu._menuItems.Mixed);
+            menu._menuItems.Harass = new Aimtec.SDK.Menu.Menu(Constants.ChampionMenus.HarassSettingsL, Constants.ChampionMenus.HarassSettings);
+            menu._menuItems.Mode.Add(menu._menuItems.Harass);
 
             //Harass Mana Menu
             menu._menuItems.HarassManaMenu = new Aimtec.SDK.Menu.Menu(Constants.ChampionMenus.HarassManaManagerL, Constants.ChampionMenus.HarassManaManager);
@@ -46,9 +75,14 @@ namespace Berts_Base.Champion.Menu.BuildMenus
                 menu._menuItems.HarassManaMenu.Add(new MenuSlider(build + Constants.ChampionMenus.manaManagerEL, Constants.ChampionMenus.manaManagerE, 0));
                 menu._menuItems.HarassManaMenu.Add(new MenuSlider(build + Constants.ChampionMenus.manaManagerRL, Constants.ChampionMenus.manaManagerR, 0));
             }
-            menu._menuItems.Mixed.Add(menu._menuItems.HarassManaMenu);
+            menu._menuItems.Harass.Add(menu._menuItems.HarassManaMenu);
         }
 
+        /// <summary>
+        /// Sets up lane clear mana manager.
+        /// </summary>
+        /// <param name="menu">The menu.</param>
+        /// <param name="build">The build.</param>
         protected virtual void SetUpLaneClearManaManager(ref MenuManager menu, string build)
         {
             //Harass Container
@@ -66,6 +100,11 @@ namespace Berts_Base.Champion.Menu.BuildMenus
             menu._menuItems.Laneclear.Add(menu._menuItems.LaneClearManaMenu);
         }
 
+        /// <summary>
+        /// Sets up last hit mana manager.
+        /// </summary>
+        /// <param name="menu">The menu.</param>
+        /// <param name="build">The build.</param>
         protected virtual void SetUpLastHitManaManager(ref MenuManager menu, string build)
         {
             //Harass Container
@@ -83,6 +122,11 @@ namespace Berts_Base.Champion.Menu.BuildMenus
             menu._menuItems.Lasthit.Add(menu._menuItems.LastHitManaMenu);
         }
 
+        /// <summary>
+        /// Sets up automatic harass mana manager.
+        /// </summary>
+        /// <param name="menu">The menu.</param>
+        /// <param name="build">The build.</param>
         protected virtual void SetUpAutoHarassManaManager(ref MenuManager menu, string build)
         {
             //Harass Container
