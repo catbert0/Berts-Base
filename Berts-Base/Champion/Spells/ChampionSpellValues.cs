@@ -1,4 +1,4 @@
-﻿using Aimtec.SDK;
+﻿using Aimtec;
 using System;
 using System.Linq;
 
@@ -7,26 +7,30 @@ namespace Berts_Base.Champion.Spells
     class ChampionSpellValues
     {
         public Spell _flashSpell { private set; get; }
-        public Spell _smiteSpell { private set; get; }
+
+
+        public Aimtec.SDK.Spell _smiteSpell { private set; get; }
+        public Spell _smiteSpellData { private set; get; }
+
         public Spell _igniteSpell { private set; get; }
 
-        public Spell _qSpell { private set; get; }
-        public Spell _q2Spell { private set; get; }
+        public Aimtec.SDK.Spell _qSpell { private set; get; }
+        public Aimtec.SDK.Spell _q2Spell { private set; get; }
 
-        public Spell _wSpell { private set; get; }
-        public Spell _w2Spell { private set; get; }
+        public Aimtec.SDK.Spell _wSpell { private set; get; }
+        public Aimtec.SDK.Spell _w2Spell { private set; get; }
 
-        public Spell _eSpell { private set; get; }
-        public Spell _e2Spell { private set; get; }
+        public Aimtec.SDK.Spell _eSpell { private set; get; }
+        public Aimtec.SDK.Spell _e2Spell { private set; get; }
 
-        public Spell _rSpell { private set; get; }
-        public Spell _r2Spell { private set; get; }
+        public Aimtec.SDK.Spell _rSpell { private set; get; }
+        public Aimtec.SDK.Spell _r2Spell { private set; get; }
 
         /// <summary>
         /// Initialises Champion Spells
         /// </summary>
         /// <param name="champion"></param>
-        public ChampionSpellValues(Aimtec.Obj_AI_Hero champion)
+        public ChampionSpellValues(Obj_AI_Hero champion)
         {
             SetupSummoners(champion);
             SetupQ(champion);
@@ -36,27 +40,58 @@ namespace Berts_Base.Champion.Spells
         }
 
         /// <summary>
+        /// Gets if the summoner has Smite
+        /// </summary>
+        /// <returns></returns>
+        public bool GetSummonerHasSmite()
+        {
+            return _smiteSpell != null;
+        }
+
+        /// <summary>
+        /// Gets if the summoner has Flash
+        /// </summary>
+        /// <returns></returns>
+        public bool SummonerHasFlash()
+        {
+            return _flashSpell != null;
+        }
+
+        /// <summary>
+        /// Gets if the summoner has Ignite
+        /// </summary>
+        /// <returns></returns>
+        public bool SummonerHasIgnite()
+        {
+            return _igniteSpell != null;
+        }
+
+        /// <summary>
         /// Setup the summoner spells that can be used for aggressive plays.
         /// </summary>
         /// <param name="champion">The champion.</param>
-        void SetupSummoners(Aimtec.Obj_AI_Hero champion)
+        void SetupSummoners(Obj_AI_Hero champion)
         {
-            if (champion.SpellBook.Spells.Any(x => x.Name.ToLower().Contains(Constants.SpellData.Smite)))
-            {
-                SimpleLog.Info("Smite Supported - Loading Spell");
-                _smiteSpell = new Spell(champion.SpellBook.Spells.First(spell => spell.Name.Contains(Constants.SpellData.Smite)).Slot, 500);
-            }
+            GetSummonerSpell(champion.SpellBook.Spells.First(x => x.Slot.Equals(SpellSlot.Summoner1)));
+            GetSummonerSpell(champion.SpellBook.Spells.First(x => x.Slot.Equals(SpellSlot.Summoner2)));
+        }
 
-            if (champion.SpellBook.Spells.Any(x => x.Name.ToLower().Contains(Constants.SpellData.Ignite)))
-            {
-                SimpleLog.Info("Ignite Supported - Loading Spell");
-                _igniteSpell = new Spell(champion.SpellBook.Spells.First(spell => spell.Name.Contains(Constants.SpellData.Ignite)).Slot, 500);
-            }
+        private void GetSummonerSpell(Spell summoner)
+        {
+            _smiteSpellData = summoner.Name.ToLower().Contains(Constants.SpellData.Smite) ? summoner : null;
+            _igniteSpell = summoner.Name.ToLower().Contains(Constants.SpellData.Ignite) ? summoner : null;
+            _flashSpell = summoner.Name.ToLower().Contains(Constants.SpellData.Flash) ? summoner : null;
+        }
 
-            if (champion.SpellBook.Spells.Any(x => x.Name.ToLower().Contains(Constants.SpellData.Flash)))
+        public void CastSmite()
+        {
+#warning need to improve this check so I dont check for null on every smite cast
+            if (_smiteSpell == null)
+                _smiteSpell = new Aimtec.SDK.Spell(_smiteSpellData.Slot, _smiteSpellData.SpellData.CastRange);
+
+            if (_smiteSpellData.Ammo > 1)
             {
-                SimpleLog.Info("Flash Supported - Loading Spell");
-                _igniteSpell = new Spell(champion.SpellBook.Spells.First(spell => spell.Name.Contains(Constants.SpellData.Flash)).Slot, 500);
+                _smiteSpell.Cast();
             }
         }
 
@@ -65,9 +100,9 @@ namespace Berts_Base.Champion.Spells
         /// </summary>
         /// <param name="champion">The champion.</param>
         /// <exception cref="NotImplementedException"></exception>
-        void SetupQ(Aimtec.Obj_AI_Hero champion)
+        void SetupQ(Obj_AI_Hero champion)
         {
-            //_qSpell = new Spell(Aimtec.SpellSlot.Q, 0f);
+            _qSpell = new Aimtec.SDK.Spell(SpellSlot.Q, 0f);
             //_qSpell.SetCharged();
             //_qSpell.SetSkillshot();
 
@@ -82,7 +117,7 @@ namespace Berts_Base.Champion.Spells
         /// Setup W Spell.
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        void SetupW(Aimtec.Obj_AI_Hero champion)
+        void SetupW(Obj_AI_Hero champion)
         {
             //_wSpell = new Spell(Aimtec.SpellSlot.Q, 0f);
             //_wSpell.SetCharged();
@@ -99,7 +134,7 @@ namespace Berts_Base.Champion.Spells
         /// Setup E Spell.
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        void SetupE(Aimtec.Obj_AI_Hero champion)
+        void SetupE(Obj_AI_Hero champion)
         {
             //_eSpell = new Spell(Aimtec.SpellSlot.Q, 0f);
             //_eSpell.SetCharged();
@@ -116,7 +151,7 @@ namespace Berts_Base.Champion.Spells
         /// Setup R spell.
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        void SetupR(Aimtec.Obj_AI_Hero champion)
+        void SetupR(Obj_AI_Hero champion)
         {
             //_rSpell = new Spell(Aimtec.SpellSlot.Q, 0f);
             //_rSpell.SetCharged();

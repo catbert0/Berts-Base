@@ -1,4 +1,5 @@
 ﻿using Aimtec;
+using Berts_Base.Champion.AssemblyMenu;
 using Berts_Base.Champion.ComboLogic.Builds;
 
 namespace Berts_Base.SetupHelpers
@@ -13,6 +14,7 @@ namespace Berts_Base.SetupHelpers
         protected Build _currentBuild { set; get; }
 
         protected MenuManager _menu;
+        protected ChampionMenu _championMenu = new ChampionMenu();
         protected GameObjectManager _gamePlay;
     
         //Refrences to specific Build logic
@@ -27,9 +29,14 @@ namespace Berts_Base.SetupHelpers
         /// <param name="gamePlay">The game play.</param>
         public ChampionSetup(GameObjectManager gamePlay)
         {
+            SimpleLog.Info("Initialising Champion " + _currentBuild);
             _gamePlay = gamePlay;
             _menu = gamePlay._menu;
+            _championMenu.PopulateSupportedBuilds(_menu);
+            _currentBuild = _championMenu.GetBuildSettings(_menu);
+            SetupNewBuild(_currentBuild);
             Game.OnUpdate += Game_OnUpdate;
+            SimpleLog.Info("Champion Initialised " + _currentBuild);
         }
 
         /// <summary>

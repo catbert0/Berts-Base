@@ -257,7 +257,7 @@ static class Constants
     public static class SpellData
     {
         public const string Smite = "smite";
-        public const string Ignite = "summonerdot";
-        public const string Flash = "summonerflash";
+        public const string Ignite = "dot";
+        public const string Flash = "flash";
     }
 }

@@ -1,5 +1,5 @@
-﻿using Berts_Base.Champion.AssemblyMenu;
-using Berts_Base.SetupHelpers;
+﻿using Berts_Base.SetupHelpers;
+using System;
 
 namespace Berts_Base.Champion
 {
@@ -12,21 +12,13 @@ namespace Berts_Base.Champion
     /// <seealso cref="Berts_Base.SetupHelpers.ChampionSetup" />
     class Champion : ChampionSetup
     {
-        private ChampionMenu _championMenu = new ChampionMenu();
-
-        bool _manaManagerOff = false;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Champion"/> class.
         /// </summary>
         /// <param name="gamePlay">The game play.</param>
         public Champion(GameObjectManager gamePlay) : base(gamePlay)
         {
-            SimpleLog.Info("Initialising Champion " + _currentBuild);
-            _championMenu.PopulateSupportedBuilds(_menu);
-            _currentBuild = _championMenu.GetBuildSettings(_menu);
-            SetupNewBuild(_currentBuild);
-            SimpleLog.Info("Champion Initialised " + _currentBuild);
+
         }
 
         /// <summary>
@@ -35,7 +27,6 @@ namespace Berts_Base.Champion
         public override void Game_OnUpdate()
         {
             //Always prioritise autosmite
-
             CheckForMenuRefresh();
 
             //if (!CanCastSpells())
