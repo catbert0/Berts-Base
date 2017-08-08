@@ -1,5 +1,8 @@
-﻿using Aimtec.SDK.Orbwalking;
+﻿using Aimtec;
+using Aimtec.SDK.Orbwalking;
 using Berts_Base.Champion.ComboLogic.Builds.AP_ModeLogic.ChampionLogic;
+using Berts_Base.Champion.Spells;
+using Berts_Base.SetupHelpers;
 
 namespace Berts_Base.Champion.ComboLogic.Builds
 {
@@ -17,39 +20,40 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// Initializes a new instance of the <see cref="AP_Mode"/> class.
         /// </summary>
         /// <param name="orbwalker">The orbwalker.</param>
-        public AP_Mode(ref IOrbwalker orbwalker) : base(ref orbwalker)
+        public AP_Mode(GameObjectManager gameObjectManager) : base(gameObjectManager)
         {
+
         }
 
         /// <summary>
         /// Performs the obwalking mode.
         /// </summary>
         /// <param name="orbWalkingMode">The orb walking mode.</param>
-        public override void PerformObwalkingMode(OrbwalkingMode orbWalkingMode)
+        public override void PerformAssemblyLogic()
         {
-            switch (orbWalkingMode)
+            switch (_orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
                     {
-                        _orbwalkerModeLogic.Combo();
+                        _orbwalkerModeLogic.Combo(_champion);
                     }
                     break;
 
                 case OrbwalkingMode.Mixed:
                     {
-                        _orbwalkerModeLogic.Harass();
+                        _orbwalkerModeLogic.Harass(_champion);
                     }
                     break;
 
                 case OrbwalkingMode.Lasthit:
                     {
-                        _orbwalkerModeLogic.LastHit();
+                        _orbwalkerModeLogic.LastHit(_champion);
                     }
                     break;
 
                 case OrbwalkingMode.Laneclear:
                     {
-                        _orbwalkerModeLogic.LaneClear();
+                        _orbwalkerModeLogic.LaneClear(_champion);
                     }
                     break;
 

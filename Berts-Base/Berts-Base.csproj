@@ -69,21 +69,31 @@
   <ItemGroup>
     <Compile Include="Champion\Champion.cs" />
     <Compile Include="Champion\ComboLogic\Builds\AD_ModeLogic\AD_Mode.cs" />
+    <Compile Include="Champion\ComboLogic\Builds\AD_ModeLogic\ChampionLogic\ADModeEventLogic.cs" />
     <Compile Include="Champion\ComboLogic\Builds\AD_ModeLogic\ChampionLogic\ADModeOrbLogic.cs" />
+    <Compile Include="Champion\ComboLogic\Builds\AD_ModeLogic\ChampionLogic\ADModeWeavingLogic.cs" />
     <Compile Include="Champion\ComboLogic\Builds\AP_ModeLogic\AP_Mode.cs" />
+    <Compile Include="Champion\ComboLogic\Builds\AP_ModeLogic\ChampionLogic\APModeEventLogic.cs" />
     <Compile Include="Champion\ComboLogic\Builds\AP_ModeLogic\ChampionLogic\APModeOrbLogic.cs" />
+    <Compile Include="Champion\ComboLogic\Builds\AP_ModeLogic\ChampionLogic\APModeWeavingLogic.cs" />
     <Compile Include="Champion\ComboLogic\Builds\ChampionBuildBase.cs" />
+    <Compile Include="Champion\ComboLogic\Builds\General_ModeLogic\ChampionLogic\GeneralModeEventLogic.cs" />
     <Compile Include="Champion\ComboLogic\Builds\General_ModeLogic\ChampionLogic\GeneralModeOrbLogic.cs" />
+    <Compile Include="Champion\ComboLogic\Builds\General_ModeLogic\ChampionLogic\GeneralModeWeavingLogic.cs" />
     <Compile Include="Champion\ComboLogic\Builds\General_ModeLogic\General_Mode.cs" />
     <Compile Include="Champion\ComboLogic\Builds\Shared\OrbwalkingModes.cs" />
+    <Compile Include="Champion\ComboLogic\Builds\Support_ModeLogic\ChampionLogic\SupportModeEventLogic.cs" />
     <Compile Include="Champion\ComboLogic\Builds\Support_ModeLogic\ChampionLogic\SupportModeOrbLogic.cs" />
+    <Compile Include="Champion\ComboLogic\Builds\Support_ModeLogic\ChampionLogic\SupportModeWeavingLogic.cs" />
     <Compile Include="Champion\ComboLogic\Builds\Support_ModeLogic\Support_Mode.cs" />
-    <Compile Include="Champion\Menu\BuildMenus\ADMenu.cs" />
-    <Compile Include="Champion\Menu\BuildMenus\APMenu.cs" />
-    <Compile Include="Champion\Menu\BuildMenus\BasicSettings.cs" />
-    <Compile Include="Champion\Menu\BuildMenus\GeneralMenu.cs" />
-    <Compile Include="Champion\Menu\BuildMenus\SupportMenu.cs" />
-    <Compile Include="Champion\Menu\ChampionMenu.cs" />
+    <Compile Include="Champion\AssemblyMenu\BuildMenus\ADMenu.cs" />
+    <Compile Include="Champion\AssemblyMenu\BuildMenus\APMenu.cs" />
+    <Compile Include="Champion\AssemblyMenu\BuildMenus\BasicSettings.cs" />
+    <Compile Include="Champion\AssemblyMenu\BuildMenus\GeneralMenu.cs" />
+    <Compile Include="Champion\AssemblyMenu\BuildMenus\SupportMenu.cs" />
+    <Compile Include="Champion\AssemblyMenu\ChampionMenu.cs" />
+    <Compile Include="Champion\Spells\ChampionSpellValues.cs" />
+    <Compile Include="Champion\Spells\SpellController.cs" />
     <Compile Include="Properties\Setup.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -95,7 +105,6 @@
     <Compile Include="Utility\Constants\Constants.cs" />
     <Compile Include="Utility\Enums\Enum.cs" />
     <Compile Include="Utility\Helpers\MenuHelper.cs" />
-    <Compile Include="Utility\Helpers\SpellLogicHelper.cs" />
     <Compile Include="Utility\Logging\SimpleLog.cs" />
     <Compile Include="Utility\Menu\MenuItems.cs" />
     <Compile Include="Program.cs" />

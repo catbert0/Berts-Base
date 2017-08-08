@@ -2,6 +2,10 @@
 using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Events;
 using System;
+using Berts_Base.Champion.Spells;
+using Berts_Base.SetupHelpers;
+using Aimtec.SDK.Prediction.Health;
+using Aimtec.SDK.TargetSelector;
 
 namespace Berts_Base.Champion.ComboLogic.Builds
 {
@@ -15,13 +19,46 @@ namespace Berts_Base.Champion.ComboLogic.Builds
     {
         private bool _disposed;
 
+        protected IOrbwalker _orbwalker;
+        protected IHealthPrediction _healthPredition { private set; get; }
+        protected ITargetSelector _targetSelector { private set; get; }
+
+        protected MenuManager _menu;
+        protected Obj_AI_Hero _champion;
+        protected ChampionSpellValues _spellData;
+
+        protected SpellController _spellController = new SpellController();
+    
         /// <summary>
         /// Initializes a new instance of the <see cref="ChampionBuildBase"/> class.
         /// 
         /// This sets up event listeners ready to react to the events that can occur
         /// </summary>
         /// <param name="orbwalker">The orbwalker.</param>
-        public ChampionBuildBase(ref IOrbwalker orbwalker)
+        public ChampionBuildBase(GameObjectManager gameObjectManager)
+        {
+            SetUpGameObjects(gameObjectManager);
+            SetupEventTriggers();
+        }
+
+        /// <summary>
+        /// Sets up game objects.
+        /// </summary>
+        /// <param name="gameObjectManager">The game object manager.</param>
+        private void SetUpGameObjects(GameObjectManager gameObjectManager)
+        {
+            _champion = gameObjectManager._champion;
+            _orbwalker = gameObjectManager._orbWalker;
+            _healthPredition = gameObjectManager._healthPredition;
+            _targetSelector = gameObjectManager._targetSelector;
+            _menu = gameObjectManager._menu;
+            _spellData = new ChampionSpellValues(_champion);
+        }
+
+        /// <summary>
+        /// Setup the event triggers.
+        /// </summary>
+        private void SetupEventTriggers()
         {
             SpellBook.OnCastSpell += OnCastSpell;
             SpellBook.OnStopCast += OnStopCast;
@@ -43,14 +80,14 @@ namespace Berts_Base.Champion.ComboLogic.Builds
             AttackableUnit.OnLeaveVisible += OnLeaveVisible;
             GameObject.OnCreate += OnCreate;
             GameObject.OnDestroy += OnDestroy;
-            orbwalker.PreAttack += OnPreAttack;
-            orbwalker.PostAttack += OnPostAttack;
-            orbwalker.PreMove += OnPreMove;
-            orbwalker.OnNonKillableMinion += OnNonKillableMinion;
             Dash.HeroDashed += OnGapcloser;
             BuffManager.OnAddBuff += OnAddBuff;
             BuffManager.OnRemoveBuff += OnRemoveBuff;
             HudManager.OnSelectUnit += OnSelectUnit;
+            _orbwalker.PreAttack += OnPreAttack;
+            _orbwalker.PostAttack += OnPostAttack;
+            _orbwalker.PreMove += OnPreMove;
+            _orbwalker.OnNonKillableMinion += OnNonKillableMinion;
         }
 
         /// <summary>
@@ -58,7 +95,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="SpellBookCastSpellEventArgs"/> instance containing the event data.</param>
-        public virtual void OnCastSpell(Obj_AI_Base sender, SpellBookCastSpellEventArgs e)
+        protected virtual void OnCastSpell(Obj_AI_Base sender, SpellBookCastSpellEventArgs e)
         {
             return;
         }
@@ -68,7 +105,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="SpellBookStopCastEventArgs"/> instance containing the event data.</param>
-        public virtual void OnStopCast(Obj_AI_Base sender, SpellBookStopCastEventArgs e)
+        protected virtual void OnStopCast(Obj_AI_Base sender, SpellBookStopCastEventArgs e)
         {
             return;
         }
@@ -78,7 +115,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="SpellBookUpdateChargedSpellEventArgs"/> instance containing the event data.</param>
-        public virtual void OnUpdateChargedSpell(Obj_AI_Base sender, SpellBookUpdateChargedSpellEventArgs e)
+        protected virtual void OnUpdateChargedSpell(Obj_AI_Base sender, SpellBookUpdateChargedSpellEventArgs e)
         {
             return;
         }
@@ -86,7 +123,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// <summary>
         /// Called when [present].
         /// </summary>
-        public virtual void OnPresent()
+        protected virtual void OnPresent()
         {
             return;
         }
@@ -94,7 +131,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// <summary>
         /// Called when [render].
         /// </summary>
-        public virtual void OnRender()
+        protected virtual void OnRender()
         {
             return;
         }
@@ -104,7 +141,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="Obj_AI_BaseMissileClientDataEventArgs"/> instance containing the event data.</param>
-        public virtual void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs e)
+        protected virtual void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs e)
         {
             return;
         }
@@ -114,7 +151,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="Obj_AI_BaseIssueOrderEventArgs"/> instance containing the event data.</param>
-        public virtual void OnIssueOrder(Obj_AI_Base sender, Obj_AI_BaseIssueOrderEventArgs e)
+        protected virtual void OnIssueOrder(Obj_AI_Base sender, Obj_AI_BaseIssueOrderEventArgs e)
         {
             return;
         }
@@ -123,7 +160,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// Called when [create].
         /// </summary>
         /// <param name="sender">The sender.</param>
-        public virtual void OnCreate(GameObject sender)
+        protected virtual void OnCreate(GameObject sender)
         {
             return;
         }
@@ -132,7 +169,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// Called when [destroy].
         /// </summary>
         /// <param name="sender">The sender.</param>
-        public virtual void OnDestroy(GameObject sender)
+        protected virtual void OnDestroy(GameObject sender)
         {
             return;
         }
@@ -142,7 +179,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="PreAttackEventArgs"/> instance containing the event data.</param>
-        public virtual void OnPreAttack(object sender, PreAttackEventArgs e)
+        protected virtual void OnPreAttack(object sender, PreAttackEventArgs e)
         {
             return;
         }
@@ -152,7 +189,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="PostAttackEventArgs"/> instance containing the event data.</param>
-        public virtual void OnPostAttack(object sender, PostAttackEventArgs e)
+        protected virtual void OnPostAttack(object sender, PostAttackEventArgs e)
         {
             return;
         }
@@ -162,7 +199,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="PreMoveEventArgs"/> instance containing the event data.</param>
-        public virtual void OnPreMove(object sender, PreMoveEventArgs e)
+        protected virtual void OnPreMove(object sender, PreMoveEventArgs e)
         {
             return;
         }
@@ -172,7 +209,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="NonKillableMinionEventArgs"/> instance containing the event data.</param>
-        public virtual void OnNonKillableMinion(object sender, NonKillableMinionEventArgs e)
+        protected virtual void OnNonKillableMinion(object sender, NonKillableMinionEventArgs e)
         {
             return;
         }
@@ -182,7 +219,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The e.</param>
-        public virtual void OnGapcloser(object sender, Dash.DashArgs e)
+        protected virtual void OnGapcloser(object sender, Dash.DashArgs e)
         {
             return;
         }
@@ -192,7 +229,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="buff">The buff.</param>
-        public virtual void OnAddBuff(Obj_AI_Base sender, Buff buff)
+        protected virtual void OnAddBuff(Obj_AI_Base sender, Buff buff)
         {
             return;
         }
@@ -202,7 +239,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="buff">The buff.</param>
-        public virtual void OnRemoveBuff(Obj_AI_Base sender, Buff buff)
+        protected virtual void OnRemoveBuff(Obj_AI_Base sender, Buff buff)
         {
             return;
         }
@@ -211,7 +248,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// Called when [select unit].
         /// </summary>
         /// <param name="e">The e.</param>
-        public virtual void OnSelectUnit(GameObject e)
+        protected virtual void OnSelectUnit(GameObject e)
         {
             return;
         }
@@ -220,7 +257,8 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// Performs the obwalking mode.
         /// </summary>
         /// <param name="orbWalkingMode">The orb walking mode.</param>
-        public abstract void PerformObwalkingMode(OrbwalkingMode orbWalkingMode);
+        /// <param name="spellData">The spell data.</param>
+        public abstract void PerformAssemblyLogic();
 
         /// <summary>
         /// Called when [enter visible].
@@ -228,7 +266,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         /// <exception cref="NotImplementedException"></exception>
-        public virtual void OnEnterVisible(AttackableUnit sender, EventArgs e)
+        protected virtual void OnEnterVisible(AttackableUnit sender, EventArgs e)
         {
             return;
         }
@@ -238,7 +276,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        public virtual void OnLeaveVisible(AttackableUnit sender, EventArgs e)
+        protected virtual void OnLeaveVisible(AttackableUnit sender, EventArgs e)
         {
             return;
         }
@@ -248,7 +286,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="AttackableUnitDamageEventArgs"/> instance containing the event data.</param>
-        public virtual void OnDamage(AttackableUnit sender, AttackableUnitDamageEventArgs e)
+        protected virtual void OnDamage(AttackableUnit sender, AttackableUnitDamageEventArgs e)
         {
             return;
         }
@@ -258,7 +296,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="Obj_AI_BaseTeleportEventArgs"/> instance containing the event data.</param>
-        public virtual void OnTeleport(Obj_AI_Base sender, Obj_AI_BaseTeleportEventArgs e)
+        protected virtual void OnTeleport(Obj_AI_Base sender, Obj_AI_BaseTeleportEventArgs e)
         {
             return;
         }
@@ -268,7 +306,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="Obj_AI_BaseMissileClientDataEventArgs"/> instance containing the event data.</param>
-        public virtual void OnProcessAutoAttack(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs e)
+        protected virtual void OnProcessAutoAttack(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs e)
         {
             return;
         }
@@ -278,7 +316,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="Obj_AI_BasePlayAnimationEventArgs"/> instance containing the event data.</param>
-        public virtual void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BasePlayAnimationEventArgs e)
+        protected virtual void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BasePlayAnimationEventArgs e)
         {
             return;
         }
@@ -288,7 +326,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="Obj_AI_BaseMissileClientDataEventArgs"/> instance containing the event data.</param>
-        public virtual void OnPerformCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs e)
+        protected virtual void OnPerformCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs e)
         {
             return;
         }
@@ -298,7 +336,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="Obj_AI_BaseNewPathEventArgs"/> instance containing the event data.</param>
-        public virtual void OnNewPath(Obj_AI_Base sender, Obj_AI_BaseNewPathEventArgs e)
+        protected virtual void OnNewPath(Obj_AI_Base sender, Obj_AI_BaseNewPathEventArgs e)
         {
             return;
         }
@@ -308,7 +346,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="Obj_AI_BaseLevelUpEventArgs"/> instance containing the event data.</param>
-        public virtual void OnLevelUp(Obj_AI_Base sender, Obj_AI_BaseLevelUpEventArgs e)
+        protected virtual void OnLevelUp(Obj_AI_Base sender, Obj_AI_BaseLevelUpEventArgs e)
         {
             return;
         }
@@ -318,7 +356,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="Obj_AI_BaseInteractionEventArgs"/> instance containing the event data.</param>
-        public virtual void OnInteraction(Obj_AI_Base sender, Obj_AI_BaseInteractionEventArgs e)
+        protected virtual void OnInteraction(Obj_AI_Base sender, Obj_AI_BaseInteractionEventArgs e)
         {
             return;
         }
@@ -328,49 +366,9 @@ namespace Berts_Base.Champion.ComboLogic.Builds
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="Obj_AI_BaseChangeAnimationStateEventArgs"/> instance containing the event data.</param>
-        public virtual void OnChangeAnimationState(Obj_AI_Base sender, Obj_AI_BaseChangeAnimationStateEventArgs e)
+        protected virtual void OnChangeAnimationState(Obj_AI_Base sender, Obj_AI_BaseChangeAnimationStateEventArgs e)
         {
             return;
-        }
-
-        /// <summary>
-        /// Gets if should cast q.
-        /// </summary>
-        /// <returns></returns>
-        public virtual bool GetIfShouldCastQ()
-        {
-#warning Need to implement manalogic
-            return true;
-        }
-
-        /// <summary>
-        /// Gets if should cast w.
-        /// </summary>
-        /// <returns></returns>
-        public virtual bool GetIfShouldCastW()
-        {
-#warning Need to implement manalogic
-            return true;
-        }
-
-        /// <summary>
-        /// Gets if should cast e.
-        /// </summary>
-        /// <returns></returns>
-        public virtual bool GetIfShouldCastE()
-        {
-#warning Need to implement manalogic
-            return true;
-        }
-
-        /// <summary>
-        /// Gets if should cast r.
-        /// </summary>
-        /// <returns></returns>
-        public virtual bool GetIfShouldCastR()
-        {
-#warning Need to implement manalogic
-            return true;
         }
 
         /// <summary>

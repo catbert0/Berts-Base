@@ -1,10 +1,10 @@
-﻿using Berts_Base.Champion.Menu.BuildMenus;
-using Berts_Base.SetupHelpers;
-using Aimtec.SDK.Menu.Components;
+﻿using Berts_Base.SetupHelpers;
 using Aimtec.SDK.Menu;
 using System;
+using Berts_Base.Champion.AssemblyMenu.BuildMenus;
+using Aimtec.SDK.Menu.Components;
 
-namespace Berts_Base.Champion.Menu
+namespace Berts_Base.Champion.AssemblyMenu
 {
     /// <summary>
     /// Author: Robert - catbert
@@ -24,13 +24,13 @@ namespace Berts_Base.Champion.Menu
         /// Populates the menu with supported builds
         /// </summary>
         /// <param name="menu">The menu.</param>
-        public void PopulateSupportedBuilds(ref MenuManager menu)
+        public void PopulateSupportedBuilds(MenuManager menu)
         {
             SimpleLog.Info("Initialising MenuManager");
 
             DisposeOldMenu(ref menu);
 
-            menu._menuItems.Mode = new Aimtec.SDK.Menu.Menu(Constants.MenuOptions.BuildL, Constants.MenuOptions.Build);
+            menu._menuItems.Mode = new Menu(Constants.MenuOptions.BuildL, Constants.MenuOptions.Build);
             {
                 menu._menuItems.Mode.Add(new MenuList(Constants.MenuOptions.ModeL, Constants.MenuOptions.Mode, MenuHelper.GetSupportedModes(), 0));
             }
@@ -44,7 +44,7 @@ namespace Berts_Base.Champion.Menu
         /// </summary>
         /// <param name="menu">The menu.</param>
         /// <returns></returns>
-        public Build GetBuildSettings(ref MenuManager menu)
+        public Build GetBuildSettings(MenuManager menu)
         {
             SimpleLog.Info("Initialising a new build GetBuildSettings()");
             Build build = GetBuild(menu);

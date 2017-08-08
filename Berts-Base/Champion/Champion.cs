@@ -1,5 +1,5 @@
-﻿using Berts_Base.SetupHelpers;
-using Berts_Base.Champion.Menu;
+﻿using Berts_Base.Champion.AssemblyMenu;
+using Berts_Base.SetupHelpers;
 
 namespace Berts_Base.Champion
 {
@@ -23,8 +23,8 @@ namespace Berts_Base.Champion
         public Champion(GameObjectManager gamePlay) : base(gamePlay)
         {
             SimpleLog.Info("Initialising Champion " + _currentBuild);
-            _championMenu.PopulateSupportedBuilds(ref _menu);
-            _currentBuild = _championMenu.GetBuildSettings(ref _menu);
+            _championMenu.PopulateSupportedBuilds(_menu);
+            _currentBuild = _championMenu.GetBuildSettings(_menu);
             SetupNewBuild(_currentBuild);
             SimpleLog.Info("Champion Initialised " + _currentBuild);
         }
@@ -34,12 +34,14 @@ namespace Berts_Base.Champion
         /// </summary>
         public override void Game_OnUpdate()
         {
+            //Always prioritise autosmite
+
             CheckForMenuRefresh();
 
-            if (!CastSpells())
-                return;
+            //if (!CanCastSpells())
+              // return;
 
-            GetOrbWalkerModeLogic();
+            PerformAssemblyLogic();
 
 #warning Need to implement disable AA in combo
 
@@ -57,8 +59,8 @@ namespace Berts_Base.Champion
                 {
                     SimpleLog.Info("Refreshing Menu" + _currentBuild);
                     MenuHelper.SimulateKeyPress(Constants.General.ShiftSimulateKey);
-                    _championMenu.PopulateSupportedBuilds(ref _menu);
-                    _currentBuild = _championMenu.GetBuildSettings(ref _menu);
+                    _championMenu.PopulateSupportedBuilds(_menu);
+                    _currentBuild = _championMenu.GetBuildSettings(_menu);
                     SetupNewBuild(_currentBuild, true);
                     SimpleLog.Info("MenuRefreshed");
                 }
@@ -67,35 +69,6 @@ namespace Berts_Base.Champion
                     SimpleLog.Error("Failed to transition Builds in CheckForMenuRefresh()");
                 }
             }
-        }
-
-        /// <summary>
-        /// Controller to not cast spells until a certain specified level from the menu
-        /// </summary>
-        /// <returns></returns>
-        private bool CastSpells()
-        {
-            if (!SpellLogicHelper.ShouldCastSpells(_champion.Level, _menu))
-            {
-                //User has selected to block spell casts until a level so we just orbwalk until the level has been reached
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Controller to ignore manamanager if player has blue buff
-        /// </summary>
-        /// <returns></returns>
-        private void IgnoreManaManager()
-        {
-            if (SpellLogicHelper.IgnoreManaManager(_menu) && _champion.BuffManager.HasBuff(Constants.BuffNames.BlueBuff))
-            {
-                _manaManagerOff = true;
-            }
-
-            _manaManagerOff = false;
         }
     }
 }

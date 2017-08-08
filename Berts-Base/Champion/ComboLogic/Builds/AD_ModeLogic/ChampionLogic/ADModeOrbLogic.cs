@@ -1,5 +1,7 @@
 ﻿using System;
 using Berts_Base.Champion.ComboLogic.Builds.Shared;
+using Aimtec;
+using Berts_Base.Champion.Spells;
 
 namespace Berts_Base.Champion.ComboLogic.Builds.AD_ModeLogic.ChampionLogic
 {
@@ -15,7 +17,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds.AD_ModeLogic.ChampionLogic
         /// Performs the AutoHarass Logic
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        public override void AutoHarass()
+        public override void AutoHarass(Obj_AI_Hero champion)
         {
             throw new NotImplementedException();
         }
@@ -24,7 +26,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds.AD_ModeLogic.ChampionLogic
         /// Performs the Combo Logic
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        public override void Combo()
+        public override void Combo(Obj_AI_Hero champion)
         {
             throw new NotImplementedException();
         }
@@ -33,7 +35,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds.AD_ModeLogic.ChampionLogic
         /// Performs the Harass Logic
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        public override void Harass()
+        public override void Harass(Obj_AI_Hero champion)
         {
             throw new NotImplementedException();
         }
@@ -42,7 +44,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds.AD_ModeLogic.ChampionLogic
         /// Performs the LaneClear Logic
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        public override void LaneClear()
+        public override void LaneClear(Obj_AI_Hero champion)
         {
             throw new NotImplementedException();
         }
@@ -51,7 +53,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds.AD_ModeLogic.ChampionLogic
         /// Performs the LastHit logic
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        public override void LastHit()
+        public override void LastHit(Obj_AI_Hero champion)
         {
             throw new NotImplementedException();
         }

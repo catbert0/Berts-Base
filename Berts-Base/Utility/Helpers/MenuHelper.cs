@@ -1,6 +1,6 @@
 ﻿using Aimtec.SDK.Menu;
-using Aimtec.SDK.Menu.Components;
 using System.Collections.Generic;
+using Aimtec.SDK.Menu.Components;
 
 namespace Berts_Base
 {
@@ -31,6 +31,17 @@ namespace Berts_Base
         public static bool GetMenuBoolVal(Menu menuItem, string option)
         {
             return menuItem[option].As<MenuBool>().Value;
+        }
+
+        /// <summary>
+        /// Gets the menu slider value.
+        /// </summary>
+        /// <param name="menuItem">The menu item.</param>
+        /// <param name="option">The option.</param>
+        /// <returns></returns>
+        public static int GetMenuSliderValue(Menu menuItem, string option)
+        {
+            return menuItem[option].As<MenuSlider>().Value;
         }
 
         /// <summary>

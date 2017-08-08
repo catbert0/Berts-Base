@@ -1,5 +1,6 @@
 ﻿using System;
 using Berts_Base.Champion.ComboLogic.Builds.Shared;
+using Aimtec;
 
 namespace Berts_Base.Champion.ComboLogic.Builds.Support_ModeLogic.ChampionLogic
 {
@@ -14,7 +15,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds.Support_ModeLogic.ChampionLogic
         /// <summary>
         /// Performs the AutoHarass Logic
         /// </summary>
-        public override void Combo()
+        public override void Combo(Obj_AI_Hero champion)
         {
             throw new NotImplementedException();
         }
@@ -22,7 +23,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds.Support_ModeLogic.ChampionLogic
         /// <summary>
         /// Performs the Harass Logic
         /// </summary>
-        public override void Harass()
+        public override void Harass(Obj_AI_Hero champion)
         {
             throw new NotImplementedException();
         }
@@ -31,7 +32,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds.Support_ModeLogic.ChampionLogic
         /// Performs the AutoHarass Logic
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        public override void AutoHarass()
+        public override void AutoHarass(Obj_AI_Hero champion)
         {
             throw new NotImplementedException();
         }
@@ -39,7 +40,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds.Support_ModeLogic.ChampionLogic
         /// <summary>
         /// Performs the LaneClear Logic
         /// </summary>
-        public override void LaneClear()
+        public override void LaneClear(Obj_AI_Hero champion)
         {
             throw new NotImplementedException();
         }
@@ -47,7 +48,7 @@ namespace Berts_Base.Champion.ComboLogic.Builds.Support_ModeLogic.ChampionLogic
         /// <summary>
         /// Performs the LastHit logic
         /// </summary>
-        public override void LastHit()
+        public override void LastHit(Obj_AI_Hero champion)
         {
             throw new NotImplementedException();
         }

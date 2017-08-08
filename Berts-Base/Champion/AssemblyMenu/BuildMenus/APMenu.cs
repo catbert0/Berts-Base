@@ -1,6 +1,6 @@
 ﻿using Berts_Base.SetupHelpers;
 
-namespace Berts_Base.Champion.Menu.BuildMenus
+namespace Berts_Base.Champion.AssemblyMenu.BuildMenus
 {
     /// <summary>
     /// Author: Robert - catbert
